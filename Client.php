@@ -2,7 +2,9 @@
 
 namespace nikserg\EyeApi;
 
+use GuzzleHttp\Psr7\Response;
 use nikserg\EyeApi\model\Task;
+use Psr\Http\Message\ResponseInterface;
 
 class Client
 {
@@ -50,10 +52,10 @@ class Client
         return $this->responseToTask($response);
     }
 
-    private function responseToTask($response)
+    private function responseToTask(ResponseInterface $response)
     {
 
-        $response = json_decode($response, true);
+        $response = json_decode($response->getBody()->getContents(), true);
 
         $task = new Task();
         $task->id = $response['id'];
